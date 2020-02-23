@@ -48,6 +48,16 @@ def upload():
 
     return render_template('upload.html',form=photoform)
 
+@app.route('/files')
+def files():
+    if not session.get('logged_in'):
+         abort(401)
+   
+    return render_template('files.html' ,images=get_uploaded_images())
+
+
+
+
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -68,6 +78,20 @@ def logout():
     session.pop('logged_in', None)
     flash('You were logged out', 'success')
     return redirect(url_for('home'))
+
+
+
+def get_uploaded_images():
+    lit=list()
+    rootdir = os.getcwd()
+    ##print (rootdir)
+    for root, dirs, files in os.walk(rootdir + '/app/static/uploads'):
+        for file in files:
+            lit.append(os.path.join('/uploads',file))
+            #print(os.path.join('/uploads', file))
+    print(len(lit))        
+    return lit
+
 
 
 ###

@@ -1,0 +1,13 @@
+{%extends 'base.html'%}
+
+{%block main %}
+
+<ul>
+<div class="images">
+{%for path in images %} 
+    <li><img class=img src={{url_for('static',filename=path)}}/> </li>
+{%endfor%} 
+</div>
+</ul>
+
+{% endblock %}
